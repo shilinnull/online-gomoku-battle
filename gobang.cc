@@ -1,4 +1,4 @@
-#include "Util.hpp"
+#include "db.hpp"
 
 #define HOST "127.0.0.1"
 #define PORT 3306
@@ -60,8 +60,26 @@ void file_test()
     std::cout << body << std::endl;
 }
 
+void db_test()
+{
+    user_table ut(HOST, USER, PASS, DBNAME, PORT);
+    Json::Value user;
+    user["username"] = "xiaoming";
+    user["password"] = "123456";
+    std::cout << ut.login(user) << std::endl;
+    // bool ret = ut.insert(user);
+    // ut.select_by_id(1, user);
+    // ut.select_by_name("小明", user);
+    // ut.win(3);
+    // ut.lose(1);
+    // ut.lose(2);
+    // std::string body;
+    // json_util::serialize(user, &body);
+    // std::cout << body << std::endl;
+}
+
 int main()
 {
-    file_test();
+    db_test();
     return 0;
 }
