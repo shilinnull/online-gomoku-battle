@@ -8,7 +8,12 @@
 #include <mysql/mysql.h>
 #include <jsoncpp/json/json.h>
 
+#include <websocketpp/server.hpp>
+#include <websocketpp/config/asio_no_tls.hpp>
+
 #include "Logger.hpp"
+
+using wsserver_t = websocketpp::server<websocketpp::config::asio>;
 
 class mysql_util
 {
