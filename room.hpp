@@ -285,17 +285,16 @@ public:
             return room_ptr();
         }
         // 2. 创建房间，将用户信息添加到房间中
-        {
-            std::unique_lock<std::mutex> lock(_mutex);
-            room_ptr rp(new room(_next_rid, _tb_user, _online_user));
-            rp->add_black_user(uid1);
-            rp->add_black_user(uid2);
-            // 3. 将房间信息管理起来
-            _rooms.insert(std::make_pair(_next_rid, rp));
-            _users.insert(std::make_pair(uid1, _next_rid));
-            _users.insert(std::make_pair(uid2, _next_rid));
-            _next_rid++; // 准备下一个房间id
-        }
+        std::unique_lock<std::mutex> lock(_mutex);
+        room_ptr rp(new room(_next_rid, _tb_user, _online_user));
+        rp->add_black_user(uid1);
+        rp->add_black_user(uid2);
+        // 3. 将房间信息管理起来
+        _rooms.insert(std::make_pair(_next_rid, rp));
+        _users.insert(std::make_pair(uid1, _next_rid));
+        _users.insert(std::make_pair(uid2, _next_rid));
+        _next_rid++; // 准备下一个房间id
+        return rp;
     }
 
     /*通过房间ID获取房间信息*/
