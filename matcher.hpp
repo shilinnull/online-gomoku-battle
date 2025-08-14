@@ -5,7 +5,7 @@
 #include <mutex>
 #include <condition_variable>
 
-#include "Util.hpp"
+#include "util.hpp"
 #include "online.hpp"
 #include "db.hpp"
 #include "room.hpp"

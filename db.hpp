@@ -1,7 +1,7 @@
 #ifndef __DB_HPP__
 #define __DB_HPP__
 
-#include "Util.hpp"
+#include "util.hpp"
 #include <mutex>
 #include <cassert>
 
