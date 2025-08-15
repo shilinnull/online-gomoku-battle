@@ -58,7 +58,7 @@ private:
         if (five(row, col, 0, 1, color) ||
             five(row, col, 1, 0, color) ||
             five(row, col, -1, 1, color) ||
-            five(row, col, 1, -1, color))
+            five(row, col, -1, -1, color))
 
         {
             //任意一个方向上出现了true也就是五星连珠，则设置返回值
