@@ -52,17 +52,19 @@ private:
         }
         return count >= 5;
     }
-    int check_win(int row, int col, int color)
+    uint64_t check_win(int row, int col, int color)
     {
+        // 从下棋位置的四个不同方向上检测是否出现了5个及以上相同颜色的棋子（横行，纵列，正斜，反斜）
         if (five(row, col, 0, 1, color) ||
             five(row, col, 1, 0, color) ||
             five(row, col, -1, 1, color) ||
             five(row, col, 1, -1, color))
 
         {
-            return col == CHESS_WHITE ? _white_id : _black_id;
+            //任意一个方向上出现了true也就是五星连珠，则设置返回值
+            return color == CHESS_WHITE ? _white_id : _black_id;
         }
-        return -1;
+        return 0;
     }
 
 public:
@@ -168,7 +170,7 @@ public:
         _board[chess_row][chess_col] = cur_color;
         // 判断是否有玩家胜利（从当前走棋位置开始判断是否存在五星连珠）
         uint64_t winner_id = check_win(chess_row, chess_col, cur_color);
-        if (winner_id != -1)
+        if (winner_id != 0)
             json_resp["reason"] = "五星连珠，战无敌！";
         json_resp["result"] = true;
         json_resp["winner"] = (Json::UInt64)winner_id;
@@ -287,7 +289,7 @@ public:
         // 2. 创建房间，将用户信息添加到房间中
         std::unique_lock<std::mutex> lock(_mutex);
         room_ptr rp(new room(_next_rid, _tb_user, _online_user));
-        rp->add_black_user(uid1);
+        rp->add_white_user(uid1);
         rp->add_black_user(uid2);
         // 3. 将房间信息管理起来
         _rooms.insert(std::make_pair(_next_rid, rp));

@@ -91,6 +91,8 @@ private:
                 this->add(uid1);
                 continue;
             }
+
+            std::cout << "查看uid1 " << uid1 << " 查看uid2" << uid2;
             // 3. 校验两个玩家是否在线，如果有人掉线，则要吧另一个人重新添加入队列
             wsserver_t::connection_ptr conn1 = _om->get_conn_from_hall(uid1);
             if (conn1.get() == nullptr)

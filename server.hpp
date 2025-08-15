@@ -1,7 +1,7 @@
 #ifndef __SERVER_HPP__
 #define __SERVER_HPP__
 
-#include "Util.hpp"
+#include "util.hpp"
 #include "db.hpp"
 #include "online.hpp"
 #include "room.hpp"
@@ -118,9 +118,11 @@ private:
         if (_om.is_in_game_hall(ssp->get_user()) || _om.is_in_game_room(ssp->get_user()))
             return ws_resp(conn, false, "room_ready", "玩家重复登录！");
         // 3. 判断当前用户是否已经创建好了房间 --- 房间管理
-        room_ptr rp = _rm.get_room_by_rid(ssp->get_user());
+        room_ptr rp = _rm.get_room_by_uid(ssp->get_user());
         if (rp.get() == nullptr)
+        {
             return ws_resp(conn, false, "room_ready", "没有找到玩家的房间信息");
+        }
 
         // 4. 将当前用户添加到在线用户管理的游戏房间中
         _om.enter_game_room(ssp->get_user(), conn);
@@ -184,13 +186,13 @@ private:
         {
             //  开始对战匹配：通过匹配模块，将用户添加到匹配队列中
             _mm.add(ssp->get_user());
-            return ws_resp(conn, true, "match_start", "开始对战匹配");
+            return ws_resp(conn, true, "match_start", "");
         }
         else if (!req_json["optype"].isNull() && req_json["optype"].asString() == "match_stop")
         {
             //  停止对战匹配：通过匹配模块，将用户从匹配队列中移除
             _mm.del(ssp->get_user());
-            return ws_resp(conn, true, "match_stop", "停止对战匹配");
+            return ws_resp(conn, true, "match_stop", "");
         }
         return ws_resp(conn, false, "Unknow", "请求类型未知");
     }
