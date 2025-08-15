@@ -68,7 +68,8 @@
                     ws_hdl.onmessage = ws_onmessage;
                 },
                 error: function (xhr) {
-                    alert(JSON.stringify(xhr));
+                    // alert(JSON.stringify(xhr));
+                    alert("错误请求，重新登录");
                     location.replace("/login.html");
                 }
             })
@@ -85,7 +86,8 @@
         function ws_onmessage(evt) {
             var rsp_json = JSON.parse(evt.data);
             if (rsp_json.result == false) {
-                alert(evt.data);
+                // alert(evt.data);
+                alert("错误请求，重新登录");
                 location.replace("/login.html");
                 return;
             }
@@ -106,7 +108,8 @@
                 be.innerHTML = "开始匹配";
                 return;
             } else {
-                alert(evt.data);
+                // alert(evt.data);
+                alert("错误请求，重新登录");
                 location.replace("/login.html");
                 return;
             }

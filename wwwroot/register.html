@@ -33,6 +33,11 @@
             <div class="row">
                 <button id="submit" onclick="reg()">提交</button>
             </div>
+            <br>
+            <!-- 登录跳转按钮 -->
+            <div class="row">
+                <button id="submit" onclick="window.location.assign('/login.html')">已有账号？去登录</button>
+            </div>
         </div>
     </div>
 
@@ -67,7 +72,8 @@
                 error: function (xhr) {
                     document.getElementById("user_name").value = "";
                     document.getElementById("password").value = "";
-                    alert(JSON.stringify(xhr));
+                    // alert(JSON.stringify(xhr));
+                    alert("错误请求，重新登录");
                 }
             })
         }
